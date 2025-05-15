@@ -1,0 +1,16 @@
+import type { AuthTokens } from "./AuthTokens.interface";
+import type { Role } from "./Role.interface";
+
+export interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  privacy_consent: boolean;
+  address: string | null;
+  role: Role;
+  created_at: Date;
+  updated_at: Date;
+  auth_tokens?: AuthTokens;
+}
