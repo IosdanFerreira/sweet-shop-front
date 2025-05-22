@@ -1,7 +1,19 @@
-export default function Container({ children }: { children: React.ReactNode }) {
+import { cn } from "@/lib/utils";
+
+export default function Container({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="flex items-center justify-center">
-      <div className="container overflow-hidden">{children}</div>
+    <div
+      className={cn("flex items-center justify-center bg-background-primary")}
+    >
+      <div className={cn("container overflow-hidden", className)}>
+        {children}
+      </div>
     </div>
   );
 }

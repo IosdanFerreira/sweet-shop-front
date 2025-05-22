@@ -1,13 +1,4 @@
 import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
   Form,
   FormControl,
   FormField,
@@ -17,11 +8,12 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import InputPassword from "@/components/InputPassword";
+import InputPassword from "@/components/input-password";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,77 +23,121 @@ function RegisterForm() {
 
   const formSchema = z
     .object({
-      name: z
+      first_name: z
+        .string()
+        .min(3, { message: "O nome deve ter pelo menos 3 caracteres" }),
+      last_name: z
         .string()
         .min(3, { message: "O nome deve ter pelo menos 3 caracteres" }),
       email: z.string().email({ message: "Insira um email válido" }),
+
       password: z.string().regex(passwordRegex, {
         message:
           "A senha deve conter 8 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial",
       }),
-      confirmPassword: z.string(),
+      confirm_password: z.string(),
+      privacy_consent: z.boolean().refine((val) => val === true, {
+        message: "Você precisa aceitar os termos de privacidade.",
+      }),
+      role_id: z.number(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.password === data.confirm_password, {
       message: "As senhas devem ser iguais",
-      path: ["confirmPassword"], // Aponta o erro especificamente para o campo confirmPassword
+      path: ["confirmPassword"],
     });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
+      privacy_consent: false,
+      role_id: 2,
     },
+    shouldUnregister: false,
   });
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<z.infer<typeof formSchema> | null>(
-    null
-  );
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
-    setIsDialogOpen(true);
-    setFormData(values);
+    try {
+      // Aqui você deve implementar a chamada para a API de registro
+      console.log(values);
+    } catch {
+      // Não resetar o formulário em caso de erro
+      return;
+    }
   }
 
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* Name */}
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => {
-              const showError =
-                form.formState.errors.name && form.formState.isSubmitted;
+          <div className="flex items-center justify-between gap-5">
+            {/* First Name */}
+            <FormField
+              control={form.control}
+              name="first_name"
+              render={({ field }) => {
+                const showError =
+                  form.formState.errors.first_name &&
+                  form.formState.isSubmitted;
 
-              return (
-                <FormItem>
-                  <FormLabel
-                    className={cn(showError ? "text-destructive" : "")}
-                  >
-                    Nome
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Insira seu email"
-                      className={cn(
-                        "py-6",
-                        showError ? "text-destructive" : ""
-                      )}
-                      {...field}
-                    />
-                  </FormControl>
-                  {form.formState.isSubmitted && <FormMessage />}
-                </FormItem>
-              );
-            }}
-          />
+                return (
+                  <FormItem className="w-1/2">
+                    <FormLabel
+                      className={cn(showError ? "text-destructive" : "")}
+                    >
+                      Nome
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Insira seu nome"
+                        className={cn(
+                          "py-6 w-full",
+                          showError ? "text-destructive" : ""
+                        )}
+                        {...field}
+                      />
+                    </FormControl>
+                    {form.formState.isSubmitted && <FormMessage />}
+                  </FormItem>
+                );
+              }}
+            />
+
+            {/* Last Name */}
+            <FormField
+              control={form.control}
+              name="last_name"
+              render={({ field }) => {
+                const showError =
+                  form.formState.errors.last_name && form.formState.isSubmitted;
+
+                return (
+                  <FormItem className="w-1/2">
+                    <FormLabel
+                      className={cn(showError ? "text-destructive" : "")}
+                    >
+                      Sobrenome
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Insira seu sobrenome"
+                        className={cn(
+                          "py-6 w-full",
+                          showError ? "text-destructive" : ""
+                        )}
+                        {...field}
+                      />
+                    </FormControl>
+                    {form.formState.isSubmitted && <FormMessage />}
+                  </FormItem>
+                );
+              }}
+            />
+          </div>
 
           {/* Email */}
           <FormField
@@ -168,10 +204,10 @@ function RegisterForm() {
           {/* Confirmar Senha */}
           <FormField
             control={form.control}
-            name="confirmPassword"
+            name="confirm_password"
             render={({ field }) => {
               const showError =
-                form.formState.errors.confirmPassword &&
+                form.formState.errors.confirm_password &&
                 form.formState.isSubmitted;
 
               return (
@@ -183,7 +219,7 @@ function RegisterForm() {
                   </FormLabel>
                   <FormControl>
                     <InputPassword
-                      placeholder="Insira sua senha"
+                      placeholder="Digite novamente sua senha"
                       className={cn(
                         "py-6",
                         showError ? "text-destructive" : ""
@@ -197,27 +233,37 @@ function RegisterForm() {
             }}
           />
 
-          <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Login Realizado com sucesso</AlertDialogTitle>
-                <AlertDialogDescription>
-                  <div className="mb-2 text-md flex gap-2">
-                    <span className="block font-semibold">Email:</span>
-                    {formData?.email}
+          <FormField
+            control={form.control}
+            name="privacy_consent"
+            render={({ field }) => {
+              return (
+                <FormItem className="flex flex-col space-x-2">
+                  <div>
+                    <Checkbox
+                      id="privacy_consent"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="mr-2"
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mr-2"
+                    >
+                      Ao criar uma conta, você concorda com nossos
+                      <Link
+                        to={"/"}
+                        className="font-semibold underline text-primary ml-1"
+                      >
+                        Termos e Condições e Política de Privacidade
+                      </Link>
+                    </label>
                   </div>
-
-                  <div className="mb-2 text-md flex gap-2">
-                    <span className="block font-semibold">Senha:</span>
-                    {formData?.password}
-                  </div>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Fechar</AlertDialogCancel>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                  {form.formState.isSubmitted && <FormMessage />}
+                </FormItem>
+              );
+            }}
+          />
 
           <Button
             type="submit"

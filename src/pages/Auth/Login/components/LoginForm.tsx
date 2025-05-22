@@ -8,21 +8,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoaderCircle, TriangleAlert } from "lucide-react";
-import { Toaster, toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import InputPassword from "@/components/InputPassword";
+import InputPassword from "@/components/input-password";
+import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/auth-context";
 import { useForm } from "react-hook-form";
-import { useLogin } from "../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 function LoginForm() {
-  const navigate = useNavigate();
-
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/;
 
@@ -41,22 +38,16 @@ function LoginForm() {
       email: "",
       password: "",
     },
+    shouldUnregister: false,
   });
 
-  const { mutate, isPending, error } = useLogin({
-    onSuccess: (data) => {
-      toast("Usuário logado com sucesso", {
-        description: `Seja bem vindo, ${data?.data?.first_name}`,
-        classNames: {
-          content: "text-md",
-        },
-      });
-      // navigate("/dashboard");
-    },
-  });
+  const { login, isLoading, errors } = useAuth();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    mutate({ email: values.email, password: values.password });
+    login({
+      email: values.email,
+      password: values.password,
+    });
   }
 
   return (
@@ -125,12 +116,14 @@ function LoginForm() {
             }}
           />
 
-          {error && (
+          {errors && (
             <Alert className="text-destructive border-destructive bg-destructive/10">
               <TriangleAlert />
-              <AlertTitle>Oops, algo deu errado!</AlertTitle>
+              <AlertTitle className="font-bold">
+                Oops, algo deu errado!
+              </AlertTitle>
               <AlertDescription className="text-destructive">
-                {error?.response?.data?.errors?.map((error) => error.message)}
+                {errors?.map((error) => error.message)}
               </AlertDescription>
             </Alert>
           )}
@@ -138,12 +131,12 @@ function LoginForm() {
           <Button
             type="submit"
             className="w-full cursor-pointer text-md py-6 text-xl"
-            disabled={isPending}
+            disabled={isLoading}
           >
-            {isPending && (
+            {isLoading && (
               <LoaderCircle className="animate-spin h-5 w-5 text-white" />
             )}
-            {isPending ? "Entrando..." : "Entrar"}
+            {isLoading ? "Entrando..." : "Entrar"}
           </Button>
         </form>
       </Form>

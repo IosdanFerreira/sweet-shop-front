@@ -1,4 +1,3 @@
-import type { AuthTokens } from "./AuthTokens.interface";
 import type { Role } from "./Role.interface";
 
 export interface User {
@@ -12,5 +11,4 @@ export interface User {
   role: Role;
   created_at: Date;
   updated_at: Date;
-  auth_tokens?: AuthTokens;
 }
