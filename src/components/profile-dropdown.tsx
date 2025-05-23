@@ -6,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -33,9 +32,16 @@ export function ProfileDropdown() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm leading-none font-medium">satnaing</p>
+            <div className="flex items-center gap-1">
+              <p className="text-sm leading-none font-medium">
+                {user?.first_name}
+              </p>
+              <p className="text-sm leading-none font-medium">
+                {user?.last_name}
+              </p>
+            </div>
             <p className="text-muted-foreground text-xs leading-none">
-              satnaingdev@gmail.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>

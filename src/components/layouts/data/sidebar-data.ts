@@ -19,27 +19,33 @@ export const sidebarData: SidebarData = {
         {
           title: "Produtos",
           url: "/dashboard/produtos",
-          icon: Icons.Box,
+          icon: Icons.Package,
         },
         {
           title: "Categorias",
           url: "/dashboard/categorias",
-          icon: Icons.ChartBarStacked,
+          icon: Icons.Tags,
         },
         {
           title: "Fornecedores",
           url: "/chats",
-          icon: Icons.Users,
+          icon: Icons.Truck,
         },
         {
           title: "Estoque",
           url: "/users",
           icon: Icons.Boxes,
         },
+        
+      ],
+    },
+    {
+      title: "Financeiro",
+      items: [
         {
           title: "Vendas",
           url: "/users",
-          icon: Icons.Handshake,
+          icon: Icons.ShoppingCart,
         },
         {
           title: "Relatórios",
@@ -49,7 +55,22 @@ export const sidebarData: SidebarData = {
         {
           title: "Fluxo de caixa",
           url: "/users",
-          icon: Icons.DollarSign,
+          icon: Icons.TrendingUp,
+        },
+      ],
+    },
+    {
+      title: "Configurações",
+      items: [
+        {
+          title: "Minha conta",
+          url: "/dashboard/minha-conta",
+          icon: Icons.User,
+        },
+        {
+          title: "Configurações",
+          url: "/dashboard/configurações",
+          icon: Icons.Settings,
         },
       ],
     },

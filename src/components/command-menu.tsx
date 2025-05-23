@@ -12,7 +12,6 @@ import type { NavGroup, NavItem } from "./layouts/nav-group";
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import { ScrollArea } from "./ui/scroll-area";
-import { ThemeSwitch } from "./layouts/theme-switch";
 import { sidebarData } from "./layouts/data/sidebar-data";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "@/context/search-context";
@@ -31,10 +30,10 @@ export function CommandMenu() {
 
   return (
     <CommandDialog modal open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder="O que você procura?" />
       <CommandList>
         <ScrollArea type="hover" className="h-72 pr-1">
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>Nenhum resultado encontrado</CommandEmpty>
           {sidebarData.navGroups.map((group: NavGroup) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((navItem: NavItem, i: number) => {
@@ -74,8 +73,6 @@ export function CommandMenu() {
             </CommandGroup>
           ))}
           <CommandSeparator />
-
-          <ThemeSwitch />
         </ScrollArea>
       </CommandList>
     </CommandDialog>

@@ -98,11 +98,11 @@ const SidebarMenuLink = ({
         asChild
         isActive={checkIsActive(href, item)}
         tooltip={item.title}
-        className={cn("py-5 hover:bg-background-primary/20")}
+        className={cn("dark:hover:bg-sidebar-accent")}
       >
         <Link to={item.url} onClick={() => setOpenMobile(false)}>
-          {item.icon && <item.icon />}
-          <span className="font-[500]">{item.title}</span>
+          {item.icon && <item.icon className="w-1 h-1" />}
+          <span className="">{item.title}</span>
           {item.badge && <NavBadge>{item.badge}</NavBadge>}
         </Link>
       </SidebarMenuButton>

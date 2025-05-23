@@ -8,9 +8,7 @@ export default function Container({
   className?: string;
 }) {
   return (
-    <div
-      className={cn("flex items-center justify-center bg-background-primary")}
-    >
+    <div className={cn("flex items-center justify-center")}>
       <div className={cn("container overflow-hidden", className)}>
         {children}
       </div>

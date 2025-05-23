@@ -2,10 +2,9 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import Categories from "@/pages/dashboard/categories/categories-page";
 import { DashboardLayout } from "@/components/dashboard-layout";
-import HomeDashboard from "@/pages/dashboard/home/home-dashboard";
+import { HomeDashboard } from "@/pages/dashboard/home/home-dashboard";
 import Login from "@/pages/Auth/Login/Login";
 import MyAccount from "@/pages/dashboard/my-account/my-account";
-import { ProductList } from "@/pages/Products/ProductList";
 import ProductsPage from "@/pages/dashboard/products/products-page";
 import ProtectedRoute from "./protected-routes-layout";
 import PublicRoute from "./public-routes-layout";
@@ -48,7 +47,7 @@ const routes = createBrowserRouter([
               },
               {
                 path: "products",
-                element: <ProductList />,
+                element: <ProductsPage />,
               },
               {
                 path: "categorias",

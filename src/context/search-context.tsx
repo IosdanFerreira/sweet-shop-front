@@ -41,6 +41,5 @@ export const useSearch = () => {
   if (!searchContext) {
     throw new Error("useSearch has to be used within <SearchContext.Provider>");
   }
-
   return searchContext;
 };

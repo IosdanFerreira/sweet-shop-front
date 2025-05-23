@@ -18,14 +18,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" variant="floating" {...props}>
       <SidebarHeader>
-        <div className="h-12 flex items-center justify-center gap-2 p-2">
+        <div className="h-12 flex items-center justify-center p-2 gap-1">
           <div className="bg-gradient-to-r from-primary to-primary/70 text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <Candy className="size-4 stroke-white" />
           </div>
 
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Sweet Shop</span>
-            <span className="truncate text-xs">Painel administrativo</span>
+            <span className="truncate font-semibold ">Sweet Shop</span>
+            <span className="truncate text-xs ">Painel administrativo</span>
           </div>
         </div>
       </SidebarHeader>
