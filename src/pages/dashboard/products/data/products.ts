@@ -1,0 +1,62 @@
+export const products = [
+  {
+    id: 1,
+    name: "Refrigerante Cola",
+    description: "Garrafa de 2L",
+    purchase_price: 3.5,
+    selling_price: 5.0,
+    stock: 150,
+    category: {
+      id: 1,
+      name: "Bebidas",
+    },
+    supplier: {
+      id: 1,
+      name: "Distribuidora São João",
+      phone: "(11) 99999-1234",
+      email: "contato@saobao.com.br",
+    },
+    created_at: "2025-01-01T10:00:00Z",
+    updated_at: "2025-01-05T14:00:00Z",
+  },
+  {
+    id: 2,
+    name: "Água Mineral",
+    description: "Garrafa 500ml",
+    purchase_price: 1.0,
+    selling_price: 2.0,
+    stock: 300,
+    category: {
+      id: 1,
+      name: "Bebidas",
+    },
+    supplier: {
+      id: 2,
+      name: "Água Pura Ltda",
+      phone: "(21) 98888-5678",
+      email: "vendas@aguapura.com",
+    },
+    created_at: "2025-02-10T09:00:00Z",
+    updated_at: "2025-02-12T11:00:00Z",
+  },
+  {
+    id: 3,
+    name: "Sabonete Neutro",
+    description: "Sabonete para todos os tipos de pele",
+    purchase_price: 0.9,
+    selling_price: 1.5,
+    stock: 80,
+    category: {
+      id: 2,
+      name: "Higiene",
+    },
+    supplier: {
+      id: 3,
+      name: "HigieClean",
+      phone: "(31) 97777-4321",
+      email: "comercial@higieclean.com.br",
+    },
+    created_at: "2025-03-15T08:00:00Z",
+    updated_at: "2025-03-16T15:00:00Z",
+  },
+] 
